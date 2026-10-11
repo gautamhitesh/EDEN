@@ -85,11 +85,14 @@ taskkill /im kiwix-serve.exe /f >nul 2>&1
 exit /b
 
 :vault
-if not exist "%USB%vault\vault.hc" (
-  echo No vault yet. Run MAKE-VAULT-Windows.bat first.
-  pause
-  exit /b
-)
+if exist "%USB%vault\vault.hc" goto vaultopen
+echo No vault yet. Creating it takes about 5 minutes and you choose the password.
+set "y="
+set /p "y=  Create it now? (y/n): "
+if /i "%y%"=="y" call "%USB%MAKE-VAULT-Windows.bat"
+title Emergency Kit
+exit /b
+:vaultopen
 if exist "%VAULT%" (
   "%VC%\VeraCrypt-x64.exe" /dismount V /quit /silent
   echo Vault closed.
@@ -98,4 +101,11 @@ if exist "%VAULT%" (
 )
 echo VeraCrypt will ask for administrator rights and then your vault password.
 "%VC%\VeraCrypt-x64.exe" /volume "%USB%vault\vault.hc" /letter V /explore /quit
+if exist "%VAULT%" call :markvault
+exit /b
+
+:markvault
+rem Same identification as the USB drives: label EDEN-VAULT + EDEN-ID.txt inside (older vaults get them on next open)
+label V: EDEN-VAULT >nul 2>&1
+if not exist V:\EDEN-ID.txt copy /y "%USB%vault\EDEN-ID.txt" V:\ >nul
 exit /b

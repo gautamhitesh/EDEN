@@ -96,7 +96,7 @@ Not in the script, so do these too:
   https://www.microsoft.com/software-download/windows11 (that page needs a browser, so ask the human).
 
 ### Step 6: Vault (HUMAN ONLY, rule 2)
-Tell the human: *"Double-click `MAKE-VAULT-Windows.bat` on the EDEN-2-KIT drive and follow its 3 prompts.
+Tell the human: *"Run `START-Windows.bat` on the EDEN-2-KIT drive, choose 5, answer y, and follow the 3 prompts.
 Choose a long passphrase you'll remember and don't write it on the stick."* Wait until they say it's
 done, then check (without opening it) that `$K\vault\vault.hc` exists and
 `$K\vault\veracrypt\windows\VeraCrypt-x64.exe` exists.

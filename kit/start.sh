@@ -85,7 +85,7 @@ wiki() {
 }
 
 vault() {
-  [ -f "$VAULT_IMG" ] || { echo "No vault yet. Create it on Windows with MAKE-VAULT-Windows.bat (see README)."; return; }
+  [ -f "$VAULT_IMG" ] || { echo "No vault yet. Create it on Windows: START-Windows.bat, option 5."; return; }
   if [ "${PLAT%%-*}" = mac ]; then
     echo "macOS: install VeraCrypt + FUSE-T from the disk image that opens now, then mount $VAULT_IMG."
     $OPEN "$USB"/vault/veracrypt/VeraCrypt_FUSE-T_*.dmg; return
@@ -97,6 +97,7 @@ vault() {
   sudo cryptsetup open --type tcrypt --veracrypt "$VAULT_IMG" ekvault || return
   mkdir -p "$VAULT_DIR" && sudo mount -o uid="$(id -u)",gid="$(id -g)" /dev/mapper/ekvault "$VAULT_DIR" \
     && echo "Vault open at $VAULT_DIR  (choose 5 again to close it)." && $OPEN "$VAULT_DIR" >/dev/null 2>&1
+  [ -f "$VAULT_DIR/EDEN-ID.txt" ] || cp "$USB/vault/EDEN-ID.txt" "$VAULT_DIR/" 2>/dev/null  # same marker as the USB drives
 }
 
 banner() {  # EDEN insignia: amber power ring with a USB stem, green EDEN, typed tagline

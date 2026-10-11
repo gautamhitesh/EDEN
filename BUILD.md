@@ -131,14 +131,16 @@ menu options 3 and 4 automatically.
 
 ## Step 5: Create your encrypted vault
 
-1. On the EDEN-2-KIT drive, double-click **`MAKE-VAULT-Windows.bat`** and follow its three prompts:
+1. On the EDEN-2-KIT drive, run **`START-Windows.bat`** → **5**. There's no vault yet, so it offers to create
+   one: answer `y` and follow the three prompts:
    - **Unpack VeraCrypt:** accept the licence, choose *Extract*, and use the folder it shows
      (`<EDEN-2-KIT drive>\vault\veracrypt\windows`).
    - **Create the vault:** in the wizard, choose *Create an encrypted file container → Standard VeraCrypt
      volume*, save it as `<EDEN-2-KIT drive>\vault\vault.hc`, use AES / SHA-512 and **exFAT**, pick a size
      (4 GB is plenty for text and scans) and set the password.
    - **Fill it in:** the script opens the vault as drive `V:` and creates
-     `notes\my-emergency-notes.md` with headings to fill in (contacts, health, documents).
+     `notes\my-emergency-notes.md` with headings to fill in (contacts, health, documents). The vault is
+     labelled `EDEN-VAULT` and gets its own `EDEN-ID.txt`, like the USB drives.
 2. **Password:** use a long passphrase you will remember (5–6 random words). Don't write it on the
    stick. If you forget it, nobody can recover the data.
 3. Close the vault with `START-Windows.bat` → **5** before unplugging.

@@ -230,7 +230,7 @@ kit/                       what sits on the stick's EDEN-2-KIT partition (minus 
   START-Windows.bat        Windows launcher and menu
   start.sh                 Linux / macOS launcher and menu
   start-mac.command        double-click wrapper for macOS
-  MAKE-VAULT-Windows.bat   one-time vault creation
+  MAKE-VAULT-Windows.bat   one-time vault creation (menu option 5 runs it when there is no vault)
   README.txt               plain-language guide for whoever finds the stick
   bin/ask.ps1              option 3 retrieval (Windows)
   bin/ask-context.pl       option 3 retrieval (Linux / macOS)

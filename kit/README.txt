@@ -58,7 +58,9 @@ THE ENCRYPTED VAULT
 -------------------
 vault\vault.hc is a 4 GB VeraCrypt container (AES, SHA-512). Without the password it's random noise.
 
-First time only (on Windows): double-click MAKE-VAULT-Windows.bat and choose the password.
+First time only (on Windows): START-Windows.bat, option 5. With no vault yet it offers to create one
+(about 5 minutes) and you choose the password. When open, the vault is labelled EDEN-VAULT and holds
+an EDEN-ID.txt, like the USB drives.
   - Use a long passphrase you can remember (e.g. 5-6 random words). Do NOT write it on this drive.
   - If you forget it, nobody can recover the data. That is the point.
 
@@ -89,7 +91,7 @@ KEEP IT WORKING
 WHAT'S WHERE (EDEN-2-KIT drive)
 ------------------------
   START-Windows.bat, start.sh, start-mac.command   launchers
-  MAKE-VAULT-Windows.bat                           creates the vault (once)
+  MAKE-VAULT-Windows.bat                           creates the vault (once; option 5 runs it for you)
   models\        Qwen3-4B-Q4_K_M.gguf, qwen2.5-1.5b-instruct-q4_k_m.gguf
   library\       wikipedia_en_medicine_maxi_2026-04.zim (Kiwix format; any extra .zim from
                  library.kiwix.org dropped here is used by options 3 and 4 automatically)

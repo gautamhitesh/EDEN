@@ -5,6 +5,8 @@ set "USB=%~d0\"
 set "VC=%USB%vault\veracrypt\windows"
 set "IMG=%USB%vault\vault.hc"
 title Make the encrypted vault
+rem START-Windows.bat option 5 calls this when there is no vault yet; it has shown the insignia already
+if not defined SHOWN powershell -NoProfile -ExecutionPolicy Bypass -File "%USB%bin\banner.ps1"
 
 if exist "%IMG%" (
   echo A vault already exists: %IMG%
@@ -76,6 +78,8 @@ mkdir V:\notes 2>nul
   echo ## Plans
   echo - Family meeting point:
 ) > V:\notes\my-emergency-notes.md
+label V: EDEN-VAULT >nul 2>&1
+copy /y "%USB%vault\EDEN-ID.txt" V:\ >nul
 start "" V:\notes
 echo.
 echo Done. Edit V:\notes\my-emergency-notes.md now, then close the vault with

@@ -1,0 +1,11 @@
+EDEN-VAULT - the encrypted vault
+================================
+vault\vault.hc on EDEN-2-KIT is a VeraCrypt container. Open it with menu option 5:
+it appears as drive V: (Windows) or a folder (Linux/Mac), labelled EDEN-VAULT.
+
+Put here:     your private files - contacts, health info, document numbers, scans.
+              Every .txt/.md file in it is read by menu option 3 (Ask a question).
+              PDFs/Word files: save a text copy too if the AI should use them.
+Do NOT:       move, rename or delete vault.hc - everything inside would be gone.
+              write the password anywhere on this stick.
+Always:       close the vault (option 5 again) before unplugging the USB.
