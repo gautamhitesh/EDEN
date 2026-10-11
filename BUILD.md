@@ -3,6 +3,10 @@
 These steps turn a blank USB stick into an EDEN drive. Expect about an hour, most of it downloading
 (~15–25 GB).
 
+> Using a coding agent (Claude Code, Codex, Cursor…)? Open this repo and ask it to *"build an EDEN drive
+> following AGENTS.md"*. It does the downloads and checks, and stops for you to confirm the disk and to
+> set the vault password.
+
 ## What you need
 
 | | Minimum | Recommended |

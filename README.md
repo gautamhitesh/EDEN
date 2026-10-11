@@ -17,7 +17,8 @@
   Plug it into any Windows, Linux or Mac computer. No internet, no install, no account.
 </p>
 
-<p align="center"><a href="BUILD.md"><b>➜ Build your own on a blank USB stick (16 GB minimum)</b></a></p>
+<p align="center"><a href="BUILD.md"><b>➜ Build your own on a blank USB stick (16 GB minimum)</b></a><br>
+  Using a coding agent? Point it at <a href="AGENTS.md"><code>AGENTS.md</code></a>.</p>
 
 <p align="center">
   <img alt="Works offline" src="https://img.shields.io/badge/internet-not%20required-16a34a">
@@ -230,6 +231,7 @@ kit/                       what sits on the stick's LLM partition (minus the big
   README.txt               plain-language guide for whoever finds the stick
   bin/ask.ps1              option 3 retrieval (Windows)
   bin/ask-context.pl       option 3 retrieval (Linux / macOS)
+AGENTS.md                  the same build as commands + safety rules, for coding agents
 BUILD.md                   step-by-step guide to building one from a blank USB stick
 tools/fetch-usb.ps1        downloads + SHA-256 checks the models, ZIMs, ISOs and binaries
 assets/logo.svg            logo (logo.png for places that don't take SVG)
