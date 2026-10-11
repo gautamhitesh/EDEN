@@ -116,9 +116,9 @@ means running it again.
 ### 3. One launcher per OS, one menu
 - `START-Windows.bat`: plain batch file. Nothing to install, and it runs on any Windows.
 - `start.sh`: bash for Linux and macOS. `start-mac.command` is a double-clickable wrapper.
-- **Executables are shipped as `.tar.gz`** on the USB and unpacked to `/tmp` on first run, because
+- **Executables are shipped as `.tar.gz`** on the USB and unpacked on first run to a private
+  per-user folder (`~/.cache/emergency-kit`, mode 700), because
   NTFS/exFAT mounts on Linux and macOS lose the executable bit and symlinks that llama.cpp needs.
-  The launcher re-unpacks when macOS has purged `/tmp`.
 
 ### 4. Picking the right hardware automatically
 The launcher detects a discrete GPU (NVIDIA / Radeon RX / Intel Arc) and uses the Vulkan build
@@ -182,6 +182,9 @@ opening the vault on Windows.
   silently broke and option 3 never saw the notes. Fix: pass `"%VAULT%."` and trim quotes in the script.
 - **macOS purges `/tmp` after 3 days.** The unpack directory survived but was empty, so the
   launcher thought llama.cpp was installed. It now checks for the binary itself, not the folder.
+- **A fixed `/tmp` path is a trap.** On a shared machine another user could pre-create
+  `/tmp/emergency-kit` with a fake `llama-cli` in it. Found by an automated security review;
+  binaries now unpack to a private per-user folder.
 - **Small models copy examples.** The example file name in the system prompt started showing up
   as a citation in real answers. Example names were removed from the prompt.
 - **An integrated + discrete GPU split is slow.** See the 23 vs 133 tok/s measurement above.

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Emergency kit launcher for Linux and macOS.   Run:  bash /path/to/USB/start.sh
-# Binaries are unpacked to /tmp on first use (the USB filesystem can't keep exec bits/symlinks).
+# Binaries are unpacked to a private folder in your home on first use (the USB filesystem can't keep exec bits/symlinks).
+# Not /tmp: a fixed /tmp path can be pre-created by another user with a fake llama-cli in it.
 USB="$(cd "$(dirname "$0")" && pwd)"
-RUN=/tmp/emergency-kit
-mkdir -p "$RUN"
+RUN="${XDG_CACHE_HOME:-$HOME/.cache}/emergency-kit"
+mkdir -p "$RUN" && chmod 700 "$RUN"
 case "$(uname -s)-$(uname -m)" in
   Darwin-arm64) PLAT=mac-arm64 ;;
   Darwin-x86_64) PLAT=mac-x64 ;;
@@ -21,7 +22,7 @@ fi
 bindir() {  # $1=llama|kiwix $2=archive name $3=binary -> dir holding the binary
   local d="$RUN/$1-$2" f
   f=$(find "$d" -type f -name "$3" 2>/dev/null | head -1)
-  if [ -z "$f" ]; then  # first run, or macOS purged old /tmp files (3-day cleanup) - unpack again
+  if [ -z "$f" ]; then  # first run, or the unpack was interrupted or cleaned up - unpack again
     rm -rf "$d"; mkdir -p "$d" && tar -xzf "$USB/bin/$1/$2.tar.gz" -C "$d" || { rm -rf "$d"; return 1; }
     f=$(find "$d" -type f -name "$3" | head -1)
   fi
