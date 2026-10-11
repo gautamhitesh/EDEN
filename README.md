@@ -58,10 +58,10 @@ models, encyclopedia and tools are plain files that can be refreshed with one sc
 
 ```
 USB stick, {{USB_SIZE}} GB
-├── Ventoy   (exFAT, {{VENTOY_GB}} GB)  bootable ISOs: Ubuntu 24.04, Tails 7, SystemRescue 13, Windows 10
-├── VTOYEFI                  Ventoy boot files
-├── LLM      (NTFS, {{KIT_GB}} GB)   the kit: launchers, models, encyclopedia, vault   <- this repo's kit/
-└── Spare    (NTFS, {{SPARE_GB}} GB)   backups (optional)
+├── EDEN-1-BOOT   (exFAT, {{VENTOY_GB}} GB)  bootable ISOs: Ubuntu 24.04, Tails 7, SystemRescue 13, Windows 10
+├── VTOYEFI                        Ventoy boot loader (never touch)
+├── EDEN-2-KIT    (NTFS, {{KIT_GB}} GB)   the kit: launchers, models, encyclopedia, vault   <- this repo's kit/
+└── EDEN-3-SPARE  (NTFS, {{SPARE_GB}} GB)   backups (optional)
 ```
 
 | Component | Version | Size | Role |
@@ -74,11 +74,14 @@ USB stick, {{USB_SIZE}} GB
 | [VeraCrypt](https://veracrypt.io) | 1.26.29 | portable + Linux + macOS (FUSE-T) | 4 GB encrypted vault (AES, SHA-512) |
 | [Ventoy](https://ventoy.net) | – | – | Multi-ISO boot menu |
 
-About {{FREE_GB}} GB of the LLM partition is still free for more encyclopedias.
+Drives are labelled `EDEN-<number>-<ROLE>`, and each holds an `EDEN-ID.txt` saying what belongs on it,
+so nobody copies files to the wrong place by accident.
+
+About {{FREE_GB}} GB of the EDEN-2-KIT partition is still free for more encyclopedias.
 
 ## How to use it
 
-Open the **LLM** drive and start the launcher for the computer you're on:
+Open the **EDEN-2-KIT** drive and start the launcher for the computer you're on:
 
 | OS | Start with |
 |---|---|
@@ -121,7 +124,7 @@ lives on the stick is in [`kit/README.txt`](kit/README.txt).
 
 ### 1. Partition plan
 Ventoy takes the first partition for ISOs. The rest of the stick was split into an NTFS
-**LLM** partition, so multi-GB model files fit (FAT32 caps files at 4 GB) and Windows, Linux
+**EDEN-2-KIT** partition, so multi-GB model files fit (FAT32 caps files at 4 GB) and Windows, Linux
 and macOS can all read it, plus a spare partition.
 
 ### 2. Reproducible downloads
@@ -223,7 +226,7 @@ Also tested: {{OTHER_TESTS}}
 ## Repository layout
 
 ```
-kit/                       what sits on the stick's LLM partition (minus the big files)
+kit/                       what sits on the stick's EDEN-2-KIT partition (minus the big files)
   START-Windows.bat        Windows launcher and menu
   start.sh                 Linux / macOS launcher and menu
   start-mac.command        double-click wrapper for macOS
@@ -240,7 +243,7 @@ assets/logo.svg            logo (logo.png for places that don't take SVG)
 Models, encyclopedias, ISOs and binaries aren't in the repo. `tools/fetch-usb.ps1` gets them:
 
 ```powershell
-powershell -File tools\fetch-usb.ps1 -Ventoy <Ventoy partition drive> -Kit <LLM partition drive>
+powershell -File tools\fetch-usb.ps1 -Ventoy <EDEN-1-BOOT drive> -Kit <EDEN-2-KIT drive>
 ```
 
 ## How it was made

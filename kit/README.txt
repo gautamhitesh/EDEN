@@ -9,12 +9,12 @@ In a real emergency, call for help first: 112 (India / EU), 911 (US/Canada).
 The AI can be wrong. For medical questions, cross-check with the encyclopedia (option 4).
 
 
-DRIVES YOU WILL SEE
+DRIVES YOU WILL SEE   (pattern: EDEN-<number>-<ROLE>; each has an EDEN-ID.txt saying what goes there)
 -------------------
-  Ventoy   bootable operating systems (.iso files) - do not rename them
-  LLM      this kit: launchers, AI models, encyclopedia, encrypted vault
-  Linux    spare space (10 GB) - use for backups if you like
-  VTOYEFI  Ventoy's boot files - never touch
+  EDEN-1-BOOT    bootable operating systems (.iso files only) - do not rename them
+  EDEN-2-KIT     this kit: launchers, AI models, encyclopedia, encrypted vault
+  EDEN-3-SPARE   spare space - use for backups if you like (not encrypted)
+  VTOYEFI        the boot loader - never touch or rename
 
 
 A) BOOT ANOTHER OPERATING SYSTEM
@@ -34,12 +34,12 @@ A) BOOT ANOTHER OPERATING SYSTEM
 
 B) THE EMERGENCY KIT (AI, ENCYCLOPEDIA, VAULT)
 ----------------------------------------------
-Open the "LLM" drive, then:
+Open the "EDEN-2-KIT" drive, then:
   Windows .... double-click START-Windows.bat
   Linux ...... right-click in the drive > Open in Terminal > type:  bash start.sh
                (works inside Ubuntu/Tails booted from this USB too)
   Mac ........ double-click start-mac.command
-               (if blocked: open Terminal and type  bash /Volumes/LLM/start.sh )
+               (if blocked: open Terminal and type  bash /Volumes/EDEN-2-KIT/start.sh )
                Note: Macs can read this drive but not write to it - that's fine.
 
 Menu:
@@ -73,7 +73,7 @@ What to put in it:  plain text files (.txt or .md), anywhere in the vault. Optio
 Opening it:
   Windows .... menu option 5 (asks for admin rights, then the password). It appears as drive V:.
   Linux ...... menu option 5 (asks your Linux password for sudo, then the vault password).
-  Tails ...... Applications > Utilities > Unlock VeraCrypt Volumes > choose LLM\vault\vault.hc
+  Tails ...... Applications > Utilities > Unlock VeraCrypt Volumes > choose EDEN-2-KIT\vault\vault.hc
   Mac ........ install vault\veracrypt\fuse-t-macos-installer-*.pkg, then the VeraCrypt_FUSE-T
                disk image, then mount vault.hc with VeraCrypt. Menu 3 finds it automatically.
 ALWAYS close the vault (option 5 again, or eject) before unplugging the USB.
@@ -86,7 +86,7 @@ KEEP IT WORKING
   - USB drives die. If it acts strange, copy everything to a new one.
 
 
-WHAT'S WHERE (LLM drive)
+WHAT'S WHERE (EDEN-2-KIT drive)
 ------------------------
   START-Windows.bat, start.sh, start-mac.command   launchers
   MAKE-VAULT-Windows.bat                           creates the vault (once)

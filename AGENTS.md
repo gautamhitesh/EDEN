@@ -17,7 +17,9 @@ commands, plus the rules you must follow. Do the steps in order and verify each 
    launchers use these exact names.
 5. **Never pipe input into `START-Windows.bat`.** Its menu loops forever at end of input. Test with
    the headless commands in step 7 instead.
-6. Ventoy and partitioning need an **elevated (Administrator / root) shell**. If yours isn't, stop and
+6. **Keep the drive labels** `EDEN-1-BOOT`, `EDEN-2-KIT` (and `EDEN-3-SPARE` if made) and never touch
+   `VTOYEFI`. Each EDEN drive carries an `EDEN-ID.txt`; read it before writing anything to a drive.
+7. Ventoy and partitioning need an **elevated (Administrator / root) shell**. If yours isn't, stop and
    ask the human to start one. Don't try to bypass UAC or sudo.
 
 ## Inputs to get from the human
@@ -51,24 +53,30 @@ working. The command returns before it finishes. Wait until `cli_done.txt` exist
 folder: `0` means success, `1` means failure (details in `cli_log.txt`).
 
 Verify: `Get-Partition -DiskNumber <N>` shows the large **Ventoy** partition and the small **VTOYEFI** one.
+Then label the boot partition and mark it:
+```powershell
+Set-Volume -FileSystemLabel Ventoy -NewFileSystemLabel EDEN-1-BOOT
+$V = (Get-Volume -FileSystemLabel EDEN-1-BOOT).DriveLetter + ':'
+Copy-Item boot\EDEN-ID.txt "$V\"
+```
 
 ### Step 3: Create the kit partition
 ```powershell
 New-Partition -DiskNumber <N> -UseMaximumSize -AssignDriveLetter |
-  Format-Volume -FileSystem NTFS -NewFileSystemLabel LLM -Confirm:$false
+  Format-Volume -FileSystem NTFS -NewFileSystemLabel EDEN-2-KIT -Confirm:$false
 ```
 NTFS is required (model files are over 4 GB). Record the two drive letters:
 ```powershell
-Get-Volume | Where-Object FileSystemLabel -in 'Ventoy','LLM' | Format-Table DriveLetter, FileSystemLabel, FileSystem, @{n='GB';e={[math]::Round($_.Size/1GB,1)}}
+Get-Volume | Where-Object FileSystemLabel -in 'EDEN-1-BOOT','EDEN-2-KIT' | Format-Table DriveLetter, FileSystemLabel, FileSystem, @{n='GB';e={[math]::Round($_.Size/1GB,1)}}
 ```
-The rest of this file calls them `$V` (Ventoy) and `$K` (LLM), for example `$V='E:'; $K='F:'`.
+The rest of this file calls them `$V` (EDEN-1-BOOT) and `$K` (EDEN-2-KIT), for example `$V='E:'; $K='F:'`.
 
 ### Step 4: Copy the kit
 From the repository root:
 ```powershell
 Copy-Item -Path kit\* -Destination "$K\" -Recurse -Force
 ```
-Verify: `$K\START-Windows.bat`, `$K\start.sh` and `$K\bin\ask.ps1` exist.
+Verify: `$K\START-Windows.bat`, `$K\start.sh`, `$K\bin\ask.ps1` and `$K\EDEN-ID.txt` exist.
 
 ### Step 5: Download everything
 ```powershell
@@ -88,7 +96,7 @@ Not in the script, so do these too:
   https://www.microsoft.com/software-download/windows11 (that page needs a browser, so ask the human).
 
 ### Step 6: Vault (HUMAN ONLY, rule 2)
-Tell the human: *"Double-click `MAKE-VAULT-Windows.bat` on the LLM drive and follow its 3 prompts.
+Tell the human: *"Double-click `MAKE-VAULT-Windows.bat` on the EDEN-2-KIT drive and follow its 3 prompts.
 Choose a long passphrase you'll remember and don't write it on the stick."* Wait until they say it's
 done, then check (without opening it) that `$K\vault\vault.hc` exists and
 `$K\vault\veracrypt\windows\VeraCrypt-x64.exe` exists.
@@ -121,19 +129,20 @@ can create it with VeraCrypt's Linux GUI.
 
 ```bash
 lsblk -d -o NAME,MODEL,SIZE,TRAN | awk 'NR==1 || /usb/'          # step 1: confirm /dev/sdX with the human
-sudo sh Ventoy2Disk.sh -i -s -r <reserve MB> /dev/sdX            # step 2: -s = Secure Boot (OFF by default on Linux)
+sudo sh Ventoy2Disk.sh -i -s -L EDEN-1-BOOT -r <reserve MB> /dev/sdX   # step 2: -s = Secure Boot (OFF by default on Linux)
 sudo parted /dev/sdX unit MiB print free                          # step 3: find where the free space starts
 sudo parted -s /dev/sdX mkpart primary ntfs <start>MiB 100%
-sudo mkfs.ntfs -f -L LLM /dev/sdX3
+sudo mkfs.ntfs -f -L EDEN-2-KIT /dev/sdX3
+# then copy boot/EDEN-ID.txt to the EDEN-1-BOOT partition
 ```
 For step 5 there's no PowerShell, so download by hand using the table in
 [`BUILD.md` → Step 4](BUILD.md#step-4-download-the-models-encyclopedia-and-tools). Check each file with
 `sha256sum` against the hashes in `tools/fetch-usb.ps1`, and unpack the Windows zips to the folders listed
-there. Verify with `bash start.sh ask` from the LLM drive, typing one question and then an empty line.
+there. Verify with `bash start.sh ask` from the EDEN-2-KIT drive, typing one question and then an empty line.
 
 ## Done means
 
-- [ ] Ventoy and LLM partitions exist on the confirmed disk, and no other disk was touched
+- [ ] EDEN-1-BOOT and EDEN-2-KIT partitions exist on the confirmed disk, each with its EDEN-ID.txt, and no other disk was touched
 - [ ] `fetch-usb.ps1` finished with `ALL DONE`, and every SHA-256 check said `sha256 ok`
 - [ ] FUSE-T pkg is in `vault\veracrypt\`
 - [ ] The human created the vault (`vault\vault.hc` exists)

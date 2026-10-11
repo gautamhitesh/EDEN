@@ -1,0 +1,14 @@
+EDEN - Emergency Drive for Everything Needed
+==============================================
+EDEN drives on this stick. Labels follow the pattern EDEN-<number>-<ROLE>:
+  EDEN-1-BOOT    bootable operating systems (.iso)
+  EDEN-2-KIT     offline AI, encyclopedias, encrypted vault  (start here: README.txt)
+  EDEN-3-SPARE   free space for backups (optional)
+  (VTOYEFI is the boot loader - never open, change or rename it)
+
+THIS DRIVE: EDEN-2-KIT
+
+Start:        Windows START-Windows.bat | Linux bash start.sh | Mac start-mac.command
+Put here:     extra encyclopedias (.zim) in library\  - that is all.
+Do NOT:       move, rename or delete files or folders - the launchers look for exact names.
+              Do not copy personal files here: they belong INSIDE the vault (menu option 5).

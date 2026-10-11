@@ -1,0 +1,13 @@
+EDEN - Emergency Drive for Everything Needed
+==============================================
+EDEN drives on this stick. Labels follow the pattern EDEN-<number>-<ROLE>:
+  EDEN-1-BOOT    bootable operating systems (.iso)
+  EDEN-2-KIT     offline AI, encyclopedias, encrypted vault  (start here: README.txt)
+  EDEN-3-SPARE   free space for backups (optional)
+  (VTOYEFI is the boot loader - never open, change or rename it)
+
+THIS DRIVE: EDEN-1-BOOT
+
+Put here:     .iso files only. The boot menu lists every .iso on this drive.
+Do NOT:       rename, unzip or edit the .iso files, or store anything else here.
+              Personal files here are NOT encrypted - use the vault on EDEN-2-KIT.
