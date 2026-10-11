@@ -9,6 +9,8 @@ title Emergency Kit
 
 :menu
 cls
+rem EDEN insignia: animated the first time, redrawn still above the menu after that
+if defined SHOWN (powershell -NoProfile -ExecutionPolicy Bypass -File "%BIN%\banner.ps1" -Static) else (set "SHOWN=1" & powershell -NoProfile -ExecutionPolicy Bypass -File "%BIN%\banner.ps1")
 echo.
 echo   ===== EMERGENCY KIT =====
 echo   1) Chat - Qwen3 4B        (best answers, needs ~6 GB free RAM)

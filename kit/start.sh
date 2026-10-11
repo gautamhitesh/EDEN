@@ -99,7 +99,35 @@ vault() {
     && echo "Vault open at $VAULT_DIR  (choose 5 again to close it)." && $OPEN "$VAULT_DIR" >/dev/null 2>&1
 }
 
+banner() {  # EDEN insignia: amber power ring with a USB stem, green EDEN, typed tagline
+  local tty=0 n=0 i ch ic a="" w="" d="" ok="" r="" g=("" "" "" "" "" "")
+  [ -t 1 ] && tty=1 && n=$(tput colors 2>/dev/null || echo 0)
+  if [ "$n" -ge 256 ]; then
+    a=$'\e[38;5;214m' w=$'\e[97m' d=$'\e[38;5;244m' ok=$'\e[38;5;46m' r=$'\e[0m'
+    g=($'\e[38;5;22m' $'\e[38;5;28m' $'\e[38;5;34m' $'\e[38;5;40m' $'\e[38;5;46m' $'\e[38;5;82m')
+  elif [ "$n" -ge 8 ]; then  # plain Linux console: 8 colours
+    a=$'\e[33m' w=$'\e[1;37m' d=$'\e[2m' ok=$'\e[1;32m' r=$'\e[0m'
+    g=($'\e[32m' $'\e[32m' $'\e[32m' $'\e[1;32m' $'\e[1;32m' $'\e[1;32m')
+  fi
+  local icon=("  ▄▀ {▐▌} ▀▄  " " █   {▐▌}   █ " "█    {▀▀}    █" "█          █" " ▀▄      ▄▀ " "   ▀▀▀▀▀▀   ")
+  local text=("███████╗██████╗ ███████╗███╗   ██╗" "██╔════╝██╔══██╗██╔════╝████╗  ██║" "█████╗  ██║  ██║█████╗  ██╔██╗ ██║"
+              "██╔══╝  ██║  ██║██╔══╝  ██║╚██╗██║" "███████╗██████╔╝███████╗██║ ╚████║" "╚══════╝╚═════╝ ╚══════╝╚═╝  ╚═══╝")
+  local tag="E.D.E.N.  Emergency Drive for Everything Needed"
+  echo
+  for i in 0 1 2 3 4 5; do
+    ic=${icon[$i]//\{/$w}; ic=${ic//\}/$a}
+    printf '  %s%s  %s%s%s\n' "$a" "$ic" "${g[$i]}" "${text[$i]}" "$r"
+    [ $tty = 1 ] && sleep 0.07
+  done
+  printf '  %s' "$d"
+  if [ $tty = 1 ]; then for ((i = 0; i < ${#tag}; i++)); do printf '%s' "${tag:i:1}"; sleep 0.012; done; else printf '%s' "$tag"; fi
+  printf '%s\n  ' "$r"
+  for ch in offline encrypted ready; do [ $tty = 1 ] && sleep 0.16; printf '%s[%s %s %s]%s ' "$d" "$ok" "$ch" "$d" "$r"; done
+  echo
+}
+
 [ -n "$1" ] && { "$@"; exit; }  # e.g.  bash start.sh chat qwen2.5-1.5b-instruct-q4_k_m.gguf
+banner
 while :; do
   cat <<'MENU'
 
