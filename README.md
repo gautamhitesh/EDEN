@@ -1,3 +1,8 @@
+<!--
+  TEMPLATE: replace every {{PLACEHOLDER}} with your own values, then delete this comment.
+  Find them all with:  grep -n "{{" README.md
+-->
+
 <p align="center">
   <img src="assets/logo.svg" width="160" alt="EDEN logo">
 </p>
@@ -8,7 +13,7 @@
 
 <p align="center">
   <i>The garden you carry for the day everything else is gone.</i><br><br>
-  <b>An offline AI assistant, medical encyclopedia, encrypted vault and rescue OS on one 64&nbsp;GB USB stick.</b><br>
+  <b>An offline AI assistant, medical encyclopedia, encrypted vault and rescue OS on one {{USB_SIZE}}&nbsp;GB USB stick.</b><br>
   Plug it into any Windows, Linux or Mac computer. No internet, no install, no account.
 </p>
 
@@ -49,11 +54,11 @@ models, encyclopedia and tools are plain files that can be refreshed with one sc
 ## What's on the stick
 
 ```
-SanDisk 64 GB
-├── Ventoy   (exFAT, 17 GB)  bootable ISOs: Ubuntu 24.04, Tails 7, SystemRescue 13, Windows 10
+USB stick, {{USB_SIZE}} GB
+├── Ventoy   (exFAT, {{VENTOY_GB}} GB)  bootable ISOs: Ubuntu 24.04, Tails 7, SystemRescue 13, Windows 10
 ├── VTOYEFI                  Ventoy boot files
-├── LLM      (NTFS, 29 GB)   the kit: launchers, models, encyclopedia, vault   <- this repo's kit/
-└── Linux    (NTFS, 11 GB)   spare / backups
+├── LLM      (NTFS, {{KIT_GB}} GB)   the kit: launchers, models, encyclopedia, vault   <- this repo's kit/
+└── Spare    (NTFS, {{SPARE_GB}} GB)   backups (optional)
 ```
 
 | Component | Version | Size | Role |
@@ -66,7 +71,7 @@ SanDisk 64 GB
 | [VeraCrypt](https://veracrypt.io) | 1.26.29 | portable + Linux + macOS (FUSE-T) | 4 GB encrypted vault (AES, SHA-512) |
 | [Ventoy](https://ventoy.net) | – | – | Multi-ISO boot menu |
 
-About 20 GB of the LLM partition is still free for more encyclopedias.
+About {{FREE_GB}} GB of the LLM partition is still free for more encyclopedias.
 
 ## How to use it
 
@@ -131,7 +136,7 @@ means running it again.
 ### 4. Picking the right hardware automatically
 The launcher detects a discrete GPU (NVIDIA / Radeon RX / Intel Arc) and uses the Vulkan build
 **pinned to that device**. Letting llama.cpp split work across the integrated and discrete GPU
-was measured at **23 tokens/s versus 133 tokens/s** pinned on the same machine. Without a usable
+was measured at **{{SPLIT_TOKS}} tokens/s versus {{PINNED_TOKS}} tokens/s** pinned on the same machine. Without a usable
 GPU it falls back to the CPU build. Apple Silicon uses Metal.
 
 ### 5. Retrieval without a vector database
@@ -172,21 +177,24 @@ never stored on the stick.
 
 ## Test results
 
-Measured on 2026-10-11 by running the real scripts from the stick, with one medical question and
+Measured on {{TEST_DATE}} by running the real scripts from the stick, with one medical question and
 one question only a note in the vault could answer:
 
-| Machine | Backend | Medical (WikiMed) | Vault note | Time per answer |
+| Machine type | Backend | Medical (WikiMed) | Vault note | Time per answer |
 |---|---|---|---|---|
-| Windows desktop, RTX 4080 | Vulkan (pinned) | ✅ cites [Burn] | ✅ | ~18 s |
-| MacBook, Apple Silicon | Metal | ✅ | ✅ | ~20 s |
-| Linux box, CPU only | CPU, ~9 tok/s | ✅ | ✅ | ~60 s |
+| {{WINDOWS_MACHINE}} | {{BACKEND}} | {{PASS_OR_FAIL}} | {{PASS_OR_FAIL}} | {{SECONDS}} s |
+| {{MAC_MACHINE}} | {{BACKEND}} | {{PASS_OR_FAIL}} | {{PASS_OR_FAIL}} | {{SECONDS}} s |
+| {{LINUX_MACHINE}} | {{BACKEND}} | {{PASS_OR_FAIL}} | {{PASS_OR_FAIL}} | {{SECONDS}} s |
 
-Also tested: chat on all three, the encyclopedia browser on Windows and Linux, and creating and
-opening the vault on Windows.
+Use a machine type, not a model name (for example "desktop, discrete GPU", "laptop, CPU only").
+Backend is one of: Vulkan, CPU, Metal.
+
+Also tested: {{OTHER_TESTS}}
 
 ## Bugs worth remembering
 
-- **`"V:\"` in batch arrives as `V:"`.** cmd treats `\"` as an escaped quote, so the vault path
+- **A quoted drive root in batch loses its closing quote.** cmd treats the `\"` at the end of `"<drive>:\"`
+  as an escaped quote, so the vault path
   silently broke and option 3 never saw the notes. Fix: pass `"%VAULT%."` and trim quotes in the script.
 - **macOS purges `/tmp` after 3 days.** The unpack directory survived but was empty, so the
   launcher thought llama.cpp was installed. It now checks for the binary itself, not the folder.
@@ -195,7 +203,7 @@ opening the vault on Windows.
   binaries now unpack to a private per-user folder.
 - **Small models copy examples.** The example file name in the system prompt started showing up
   as a citation in real answers. Example names were removed from the prompt.
-- **An integrated + discrete GPU split is slow.** See the 23 vs 133 tok/s measurement above.
+- **An integrated + discrete GPU split is slow.** See the measurement in step 4.
 
 ## Limitations and next steps
 
@@ -224,14 +232,17 @@ tools/fetch-usb.ps1        downloads + SHA-256 checks the models, ZIMs, ISOs and
 assets/logo.svg            logo (logo.png for places that don't take SVG)
 ```
 
-Models, encyclopedias, ISOs and binaries aren't in the repo. `tools/fetch-usb.ps1` gets them.
+Models, encyclopedias, ISOs and binaries aren't in the repo. `tools/fetch-usb.ps1` gets them:
+
+```powershell
+powershell -File tools\fetch-usb.ps1 -Ventoy <Ventoy partition drive> -Kit <LLM partition drive>
+```
 
 ## How it was made
 
-Built in October 2026, pair-programming with **Claude Code** (Anthropic's agentic coding tool).
-The agent ran on a MacBook and drove a Windows GPU desktop and a Linux box over SSH on a private
-Tailscale network to prepare the stick, write the launchers and test them on all three operating
-systems. I set the goals, the threat model and the trade-offs, and tested the stick in person.
+Built {{BUILD_DATE}} by {{YOUR_NAME}}, pair-programming with **Claude Code** (Anthropic's agentic
+coding tool). The agent prepared the stick, wrote the launchers and ran the tests on Windows, Linux
+and macOS. {{YOUR_ROLE}}
 
 ## Credits
 

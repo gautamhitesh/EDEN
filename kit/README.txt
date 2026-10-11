@@ -22,7 +22,7 @@ A) BOOT ANOTHER OPERATING SYSTEM
 1. Plug in the USB, switch the computer on and press the boot-menu key repeatedly:
      Dell/Lenovo F12 | HP F9 | MSI F11 | Asus F8 or Esc | Acer F12 | Intel Mac: hold Option
    (Apple Silicon Macs (M1-M5) cannot boot these - use part B in macOS instead.)
-2. Pick the USB (often "SanDisk" or "UEFI: SanDisk"). The Ventoy menu appears.
+2. Pick the USB (listed by its brand name, often with "UEFI:" in front). The Ventoy menu appears.
 3. Choose:
      ubuntu-24.04 ........ normal Linux desktop. Pick "Try Ubuntu" - nothing gets installed.
      tails-amd64 ......... private/anonymous OS, forgets everything at shutdown.
