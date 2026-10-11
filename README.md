@@ -1,6 +1,6 @@
 <!--
   TEMPLATE: replace every {{PLACEHOLDER}} with your own values, then delete this comment.
-  Find them all with:  grep -n "{{" README.md
+  Find them all with:  grep -n "{{" README.md BUILD.md
 -->
 
 <p align="center">
@@ -16,6 +16,8 @@
   <b>An offline AI assistant, medical encyclopedia, encrypted vault and rescue OS on one {{USB_SIZE}}&nbsp;GB USB stick.</b><br>
   Plug it into any Windows, Linux or Mac computer. No internet, no install, no account.
 </p>
+
+<p align="center"><a href="BUILD.md"><b>➜ Build your own on a blank USB stick (16 GB minimum)</b></a></p>
 
 <p align="center">
   <img alt="Works offline" src="https://img.shields.io/badge/internet-not%20required-16a34a">
@@ -228,6 +230,7 @@ kit/                       what sits on the stick's LLM partition (minus the big
   README.txt               plain-language guide for whoever finds the stick
   bin/ask.ps1              option 3 retrieval (Windows)
   bin/ask-context.pl       option 3 retrieval (Linux / macOS)
+BUILD.md                   step-by-step guide to building one from a blank USB stick
 tools/fetch-usb.ps1        downloads + SHA-256 checks the models, ZIMs, ISOs and binaries
 assets/logo.svg            logo (logo.png for places that don't take SVG)
 ```
