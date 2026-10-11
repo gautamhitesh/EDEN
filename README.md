@@ -1,11 +1,13 @@
 <p align="center">
-  <img src="assets/logo.svg" width="160" alt="Fallouts Kit logo">
+  <img src="assets/logo.svg" width="160" alt="EDEN logo">
 </p>
 
-<h1 align="center">Fallouts Kit</h1>
+<h1 align="center">E.D.E.N.</h1>
+
+<p align="center"><b>Emergency Drive for Everything Needed</b></p>
 
 <p align="center">
-  <i>Everything you need to start again, when everything else is gone.</i><br><br>
+  <i>The garden you carry for the day everything else is gone.</i><br><br>
   <b>An offline AI assistant, medical encyclopedia, encrypted vault and rescue OS on one 64&nbsp;GB USB stick.</b><br>
   Plug it into any Windows, Linux or Mac computer. No internet, no install, no account.
 </p>
@@ -18,6 +20,11 @@
 </p>
 
 ---
+
+> **The name.** In the Fallout games, a GECK (Garden of Eden Creation Kit) is the device that
+> rebuilds a living world after the bombs. EDEN is the real-world, pocket-sized version: one USB
+> stick with everything needed to get going again — knowledge, advice, your own records and a working
+> computer.
 
 ## Why
 
