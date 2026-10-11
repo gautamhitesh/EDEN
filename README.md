@@ -1,10 +1,11 @@
 <p align="center">
-  <img src="assets/logo.svg" width="160" alt="Worst Day Kit logo">
+  <img src="assets/logo.svg" width="160" alt="Fallouts Kit logo">
 </p>
 
-<h1 align="center">Worst Day Kit</h1>
+<h1 align="center">Fallouts Kit</h1>
 
 <p align="center">
+  <i>Everything you need to start again, when everything else is gone.</i><br><br>
   <b>An offline AI assistant, medical encyclopedia, encrypted vault and rescue OS on one 64&nbsp;GB USB stick.</b><br>
   Plug it into any Windows, Linux or Mac computer. No internet, no install, no account.
 </p>
